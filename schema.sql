@@ -11,7 +11,7 @@ CREATE TABLE user (
   created_at timestamp DEFAULT (now())
 );
 
-CREATE TABLE products (
+CREATE TABLE product (
   id int PRIMARY KEY AUTO_INCREMENT,
   name varchar(150) NOT NULL,
   price decimal(15,2) NOT NULL,
