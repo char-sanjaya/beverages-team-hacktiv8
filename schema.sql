@@ -40,9 +40,3 @@ CREATE TABLE order_details (
   foreign key (order_id) references orders(id),
   foreign key (product_id) references product(id)
 );
-
-ALTER TABLE order ADD FOREIGN KEY (user_id) REFERENCES user (id);
-
-ALTER TABLE order_detail ADD FOREIGN KEY (order_id) REFERENCES order (id);
-
-ALTER TABLE order_detail ADD FOREIGN KEY (product_id) REFERENCES product (id);
