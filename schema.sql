@@ -55,7 +55,7 @@ INSERT INTO product (name, price, stock) VALUES
 
 -- 3. Insert Data Order (Transaksi)
 -- Budi (user_id = 2) sukses membeli, Siti (user_id = 3) masih pending
-INSERT INTO `order` (invoice_number, user_id, total_price, status) VALUES
+INSERT INTO `orders` (invoice_number, user_id, total_price, status) VALUES
 ('INV-20231025-001', 2, 42000.00, 'success'),
 ('INV-20231025-002', 3, 15000.00, 'pending');
 

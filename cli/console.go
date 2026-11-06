@@ -313,14 +313,17 @@ func (h *ConsoleHandler) listOrders() {
 		return
 	}
 
-	fmt.Println("\n============================= DAFTAR PESANAN MASUK =============================")
-	fmt.Printf("%-4s | %-18s | %-10s | %-14s | %-9s\n", "ID", "INVOICE NUMBER", "USER ID", "TOTAL (RP)", "STATUS")
-	fmt.Println("--------------------------------------------------------------------------------")
+	fmt.Println("\n================================== DAFTAR PESANAN MASUK ==================================")
+	fmt.Printf("%-4s | %-18s | %-8s | %-18s | %-14s | %-9s\n", "ID", "INVOICE NUMBER", "USER ID", "NAMA PEMBELI", "TOTAL (RP)", "STATUS")
+	fmt.Println("------------------------------------------------------------------------------------------")
 	for _, o := range orders {
-		fmt.Printf("%-4d | %-18s | User #%-5d | Rp %-11.2f | %-9s\n", o.ID, o.InvoiceNumber, o.UserID, o.TotalPrice, o.Status)
+		fmt.Printf("%-4d | %-18s | User #%-2d | %-18s | Rp %-11.2f | %-9s\n", 
+			o.ID, o.InvoiceNumber, o.UserID, o.Username, o.TotalPrice, o.Status)
 	}
-	fmt.Println("--------------------------------------------------------------------------------")
+	fmt.Println("------------------------------------------------------------------------------------------")
 }
+
+
 
 func (h *ConsoleHandler) viewOrderDetail() {
 	id, err := h.inputInt("Masukkan ID Pesanan: ")
@@ -341,14 +344,14 @@ func (h *ConsoleHandler) viewOrderDetail() {
 	}
 
 	fmt.Printf("\n--- Rincian Minuman untuk Order #%d ---\n", id)
-	fmt.Printf("%-4s | %-12s | %-8s | %-12s | %-12s\n", "NO", "PRODUCT ID", "QTY", "HARGA SATUAN", "SUBTOTAL")
+	fmt.Printf("%-4s | %-10s | %-24s | %-6s | %-12s | %-12s\n", "NO", "PRODUCT ID", "PRODUCT NAME", "QTY", "HARGA SATUAN", "SUBTOTAL")
 	fmt.Println("-------------------------------------------------------------------------")
 	var grandTotal float64
 	for i, it := range items {
 		// PERHITUNGAN SUBTOTAL: Murni hasil perkalian quantity * price (tanpa kolom palsu di database!)
 		subtotal := float64(it.Quantity) * it.Price
 		grandTotal += subtotal
-		fmt.Printf("%-4d | Produk #%-6d | %-8d | Rp %-9.2f | Rp %-9.2f\n", i+1, it.ProductID, it.Quantity, it.Price, subtotal)
+		fmt.Printf("%-4d | Prod #%-4d | %-24s | %-6d | Rp %-9.2f | Rp %-9.2f\n", i+1, it.ProductID, it.ProductName, it.Quantity, it.Price, subtotal)
 	}
 	fmt.Println("-------------------------------------------------------------------------")
 	fmt.Printf("TOTAL PEMBELIAN: Rp %.2f\n", grandTotal)

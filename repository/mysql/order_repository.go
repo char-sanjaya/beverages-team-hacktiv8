@@ -17,7 +17,8 @@ func NewOrderRepository(db *sql.DB) domain.OrderRepository {
 
 // 1. Tarik semua data pesanan murni dari tabel 'order'
 func (r *orderRepository) FetchAll() ([]domain.Order, error) {
-	query := "SELECT id, invoice_number, user_id, total_price, status, created_at FROM `order` ORDER BY created_at DESC"
+	// query := "SELECT id, invoice_number, user_id, total_price, status, created_at FROM `order` ORDER BY created_at DESC"
+	query := "SELECT o.id, o.invoice_number, o.user_id, u.name, o.total_price, o.status, o.created_at FROM `order` o INNER JOIN `user` u ON o.user_id = u.id ORDER BY o.created_at DESC"
 
 	rows, err := r.db.Query(query)
 	if err != nil {
@@ -29,7 +30,7 @@ func (r *orderRepository) FetchAll() ([]domain.Order, error) {
 	for rows.Next() {
 		var o domain.Order
 		// Scan HANYA 6 kolom asli sesuai ERD!
-		if err := rows.Scan(&o.ID, &o.InvoiceNumber, &o.UserID, &o.TotalPrice, &o.Status, &o.CreatedAt); err != nil {
+		if err := rows.Scan(&o.ID, &o.InvoiceNumber, &o.UserID, &o.Username, &o.TotalPrice, &o.Status, &o.CreatedAt); err != nil {
 			return nil, err
 		}
 		orders = append(orders, o)
@@ -39,8 +40,8 @@ func (r *orderRepository) FetchAll() ([]domain.Order, error) {
 
 // 2. Tarik item pesanan murni dari tabel 'order_detail'
 func (r *orderRepository) GetItemsByOrderID(orderID int) ([]domain.OrderDetail, error) {
-	query := "SELECT id, order_id, product_id, quantity, price FROM order_detail WHERE order_id = ? ORDER BY id ASC"
-
+	// query := "SELECT id, order_id, product_id, quantity, price FROM order_detail WHERE order_id = ? ORDER BY id ASC"
+	query := "SELECT od.id, od.order_id, od.product_id, p.name, od.quantity, od.price FROM order_detail od INNER JOIN product p ON od.product_id = p.id WHERE od.order_id = ? ORDER BY od.id ASC"
 	rows, err := r.db.Query(query, orderID)
 	if err != nil {
 		return nil, err
@@ -51,7 +52,7 @@ func (r *orderRepository) GetItemsByOrderID(orderID int) ([]domain.OrderDetail, 
 	for rows.Next() {
 		var it domain.OrderDetail
 		// Scan HANYA 5 kolom asli sesuai ERD!
-		if err := rows.Scan(&it.ID, &it.OrderID, &it.ProductID, &it.Quantity, &it.Price); err != nil {
+		if err := rows.Scan(&it.ID, &it.OrderID, &it.ProductID, &it.ProductName, &it.Quantity, &it.Price); err != nil {
 			return nil, err
 		}
 		items = append(items, it)

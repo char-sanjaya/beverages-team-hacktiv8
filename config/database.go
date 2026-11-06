@@ -13,7 +13,7 @@ func ConnectDB() (*sql.DB, error) {
 	// Gunakan environment variable MYSQL_DSN_CLI jika tersedia, jika tidak gunakan default DSN
 	dsn := os.Getenv("MYSQL_DSN_CLI")
 	if dsn == "" {
-		dsn = "root:1234@tcp(127.0.0.1:3306)/beverages?parseTime=true"
+		dsn = "root:josua69@tcp(127.0.0.1:3307)/beverages?parseTime=true"
 	}
 
 	db, err := sql.Open("mysql", dsn)

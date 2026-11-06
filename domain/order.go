@@ -13,6 +13,7 @@ type Order struct {
 	ID            int
 	InvoiceNumber string
 	UserID        int
+	Username	  string
 	TotalPrice    float64
 	Status        string
 	CreatedAt     time.Time
@@ -23,6 +24,7 @@ type OrderDetail struct {
 	ID        int
 	OrderID   int
 	ProductID int
+	ProductName string
 	Quantity  int
 	Price     float64
 }
