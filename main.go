@@ -16,6 +16,6 @@ func main() {
 
 	fmt.Println("Berhasil terhubung ke database 'beverages'.")
 
-	// UBAH BAGIAN INI: Panggil menu autentikasi awal (Masuk / Daftar)
+	// Masuk ke menu autentikasi awal (Masuk / Daftar)
 	handler.AuthMenuPage(db)
 }

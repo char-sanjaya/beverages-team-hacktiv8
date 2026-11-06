@@ -48,7 +48,7 @@ func LoginPage(db *sql.DB) {
 		password := helper.ReadString("Masukkan Password : ")
 
 		var user entity.User
-		query := `SELECT id, name, email, role, balance, created_at 
+		query := `SELECT id, name, email, password, role, balance, created_at 
 		          FROM user 
 		          WHERE email = ? AND password = ?`
 
@@ -56,6 +56,7 @@ func LoginPage(db *sql.DB) {
 			&user.ID,
 			&user.Name,
 			&user.Email,
+			&user.Password,
 			&user.Role,
 			&user.Balance,
 			&user.CreatedAt,
